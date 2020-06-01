@@ -11,9 +11,9 @@
 #include <SDL.h>
 #endif
 
-#include "php.h"
-#include "ext/standard/info.h"
-
+#include "SDL_mixer.h"
+#include <php.h>
+#include <ext/standard/info.h>
 # include <SAPI.h>
 # include <Zend/zend_extensions.h>
 
@@ -26,8 +26,19 @@ ZEND_BEGIN_ARG_INFO(arginfo_Mix_OpenAudio, 0)
     ZEND_ARG_INFO(0, nchannels)
     ZEND_ARG_INFO(0, chunksize)
 ZEND_END_ARG_INFO()
-
 PHP_FUNCTION(Mix_OpenAudio);
+
+ZEND_BEGIN_ARG_INFO(arginfo_Mix_LoadWAV, 0)
+    ZEND_ARG_INFO(0, path)
+ZEND_END_ARG_INFO()
+PHP_FUNCTION(Mix_LoadWAV);
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_Mix_PlayChannel, 0, 0, 3)
+  ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
+  ZEND_ARG_OBJ_INFO(0, chunk, Mix_Chunk, 0)
+  ZEND_ARG_TYPE_INFO(0, loops, IS_LONG, 0)
+ZEND_END_ARG_INFO()
+PHP_FUNCTION(Mix_PlayChannel);
 
 PHP_MINIT_FUNCTION(sdl_mixer);
 
