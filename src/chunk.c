@@ -1,10 +1,26 @@
-/* sdl_mixer extension for PHP */
+/*
+  +----------------------------------------------------------------------+
+  | PHP Version 7                                                        |
+  +----------------------------------------------------------------------+
+  | Copyright (c) The PHP Group                                          |
+  +----------------------------------------------------------------------+
+  | This source file is subject to version 3.01 of the PHP license,      |
+  | that is bundled with this package in the file LICENSE, and is        |
+  | available through the world-wide-web at the following url:           |
+  | https://www.php.net/license/3_01.txt                                 |
+  | If you did not receive a copy of the PHP license and are unable to   |
+  | obtain it through the world-wide-web, please send a note to          |
+  | license@php.net so we can mail you a copy immediately.               |
+  +----------------------------------------------------------------------+
+  | Author: Manuel Baldassarri <manuel@baldassarri.me>                   |
+  +----------------------------------------------------------------------+
+*/
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
-#include "php_sdl_mixer.h"
+#include "chunk.h"
 
 static zend_class_entry *php_mix_chunk_ce;
 static zend_object_handlers php_mix_chunk_handlers;
@@ -53,31 +69,6 @@ static inline void mix_chunk_to_zval(Mix_Chunk *mix_chunk, zval *zvalue)
     php_mix_chunk->intern = mix_chunk;
 }
 
-
-/*
-Mix_Chunk *gScratch = NULL;
-Mix_Music *gMusic = NULL;
-
-gMusic = Mix_LoadMUS( "beat.wav" );
-gScratch = Mix_LoadWAV( "scratch.wav" );
-
-Mix_PlayChannel( -1, gHigh, 0 );
-
-Mix_FreeChunk( gScratch );
-Mix_FreeMusic( gMusic );
-Mix_Quit();
-
-Mix_PlayingMusic()
-Mix_PlayMusic( gMusic, -1 )
-Mix_PausedMusic()
-Mix_ResumeMusic()
-Mix_PauseMusic()
-Mix_HaltMusic()
-*/
-
-/* {{{ proto int Mix_OpenAudio(string file)
-  extern int Mix_OpenAudio(int frequency, Uint16 format, int nchannels, int chunksize)
- */
 PHP_FUNCTION(Mix_OpenAudio)
 {
     zend_long frequency;
@@ -94,12 +85,7 @@ PHP_FUNCTION(Mix_OpenAudio)
 
     RETURN_LONG(Mix_OpenAudio((int)frequency, (Uint16)format, (int)nchannels, (int)chunksize));
 }
-/* }}} */
 
-/* {{{ proto Mix_Chunk * Mix_LoadWAV(string file)
-  #define Mix_LoadWAV(file)   Mix_LoadWAV_RW(SDL_RWFromFile(file, "rb"), 1)
-  extern DECLSPEC Mix_Chunk * SDLCALL Mix_LoadWAV_RW(SDL_RWops *src, int freesrc);
- */
 PHP_FUNCTION(Mix_LoadWAV)
 {
     zend_string *path;
@@ -113,12 +99,7 @@ PHP_FUNCTION(Mix_LoadWAV)
 
     mix_chunk_to_zval(mix_chunk, return_value);
 }
-/* }}} */
 
-/* {{{ proto int Mix_PlayChannel(-1, chunk, 0)
-  #define Mix_PlayChannel(channel,chunk,loops) Mix_PlayChannelTimed(channel,chunk,loops,-1)
-  extern DECLSPEC int SDLCALL Mix_PlayChannelTimed(int channel, Mix_Chunk *chunk, int loops, int ticks);
- */
 PHP_FUNCTION(Mix_PlayChannel)
 {
     zval *zchunk;
@@ -139,24 +120,9 @@ PHP_FUNCTION(Mix_PlayChannel)
 
     RETURN_LONG(nchannels);
 }
-/* }}} */
 
-static const zend_function_entry php_sdl_mixer_functions[] = {
-	PHP_FE(Mix_OpenAudio,	    arginfo_Mix_OpenAudio)
-	PHP_FE(Mix_LoadWAV,		    arginfo_Mix_LoadWAV)
-	PHP_FE(Mix_PlayChannel,	    arginfo_Mix_PlayChannel)
-
-    PHP_FE_END
-};
-
-/* {{{ PHP_MINIT_FUNCTION
- */
-PHP_MINIT_FUNCTION(sdl_mixer)
+PHP_MINIT_FUNCTION(mix_chunk)
 {
-#if defined(ZTS) && defined(COMPILE_DL_SDL_IMAGE)
-	ZEND_TSRMLS_CACHE_UPDATE();
-#endif
-
     REGISTER_LONG_CONSTANT("MIX_DEFAULT_CHANNELS", MIX_DEFAULT_CHANNELS, CONST_CS | CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("MIX_DEFAULT_FREQUENCY", MIX_DEFAULT_FREQUENCY, CONST_CS | CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("MIX_DEFAULT_FORMAT", MIX_DEFAULT_FORMAT, CONST_CS | CONST_PERSISTENT);
@@ -174,37 +140,3 @@ PHP_MINIT_FUNCTION(sdl_mixer)
 
 	return SUCCESS;
 }
-/* }}} */
-
-/* {{{ PHP_MINFO_FUNCTION
- */
-PHP_MINFO_FUNCTION(sdl_mixer)
-{
-	php_info_print_table_start();
-	php_info_print_table_header(2, "sdl_mixer support", "enabled");
-	php_info_print_table_end();
-}
-/* }}} */
-
-/* {{{ sdl_mixer_module_entry
- */
-zend_module_entry sdl_mixer_module_entry = {
-	STANDARD_MODULE_HEADER,
-	"SDL_mixer",					/* Extension name */
-	php_sdl_mixer_functions,		/* zend_function_entry */
-	PHP_MINIT(sdl_mixer),	        /* PHP_MINIT - Module initialization */
-	NULL,							/* PHP_MSHUTDOWN - Module shutdown */
-	NULL,               			/* PHP_RINIT - Request initialization */
-	NULL,							/* PHP_RSHUTDOWN - Request shutdown */
-	PHP_MINFO(sdl_mixer),			/* PHP_MINFO - Module info */
-	PHP_SDL_IMAGE_VERSION,		/* Version */
-	STANDARD_MODULE_PROPERTIES
-};
-/* }}} */
-
-#ifdef COMPILE_DL_SDL_MIXER
-# ifdef ZTS
-ZEND_TSRMLS_CACHE_DEFINE()
-# endif
-ZEND_GET_MODULE(sdl_mixer)
-#endif
