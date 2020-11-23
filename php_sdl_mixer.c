@@ -17,8 +17,8 @@
 */
 
 #include "php_sdl_mixer.h"
-#include "chunk.h"
-#include "music.h"
+#include "src/chunk.h"
+#include "src/music.h"
 
 #ifdef COMPILE_DL_SDL_MIXER
 ZEND_GET_MODULE(sdl_mixer)

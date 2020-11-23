@@ -33,6 +33,6 @@ if test "$PHP_SDL_MIXER" != "no"; then
   AC_DEFINE(HAVE_SDL_MIXER, 1, [ Have sdl_mixer support ])
 
   PHP_SUBST(SDL_MIXER_SHARED_LIBADD)
-  SDL_MIXER_SOURCE_FILES="`find src -name "*.c"`"
-  PHP_NEW_EXTENSION(sdl_mixer, $SDL_MIXER_SOURCE_FILES, $ext_shared)
+
+  PHP_NEW_EXTENSION(sdl_mixer, src/music.c src/chunk.c php_sdl_mixer.c, $ext_shared)
 fi
