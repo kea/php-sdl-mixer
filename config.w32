@@ -1,7 +1,7 @@
 ARG_ENABLE('sdl_mixer', 'sdl_mixer support', 'no');
 
-if (PHP_SDL_IMAGE != 'no') {
+if (PHP_SDL_MIXER != 'no') {
 	AC_DEFINE('HAVE_SDL_MIXER', 1, 'sdl_mixer support enabled');
 
-	EXTENSION('sdl_mixer', 'sdl_mixer.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+	EXTENSION('sdl_mixer', 'src/music.c src/chunk.c src/php_sdl_mixer.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
 }
