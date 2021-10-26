@@ -4,4 +4,5 @@ if (PHP_SDL_MIXER != 'no') {
 	AC_DEFINE('HAVE_SDL_MIXER', 1, 'sdl_mixer support enabled');
 
 	EXTENSION('sdl_mixer', 'src/music.c src/chunk.c src/php_sdl_mixer.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+	ADD_EXTENSION_DEP(sdl_mixer, sdl)
 }
