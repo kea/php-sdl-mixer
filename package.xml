@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package
+        packagerversion="1.9.4" version="2.0"
+        xmlns="http://pear.php.net/dtd/package-2.0"
+        xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+    <name>SDL_mixer</name>
+    <channel>pecl.php.net</channel>
+    <summary>Binding of SDL_mixer for PHP</summary>
+    <description>
+        SDL_mixer extension for PHP provides the binding of functions for audio loading, playing and mixing.
+    </description>
+    <lead>
+        <name>Manuel Baldassarri</name>
+        <user>kea</user>
+        <email>manuel@baldassarri.me</email>
+        <active>yes</active>
+    </lead>
+
+    <!-- Current Release -->
+    <date>2022-02-01</date>
+    <time>09:00:00</time>
+    <version>
+        <release>0.2.0</release>
+        <api>1.0.0</api>
+    </version>
+    <stability>
+        <release>stable</release>
+        <api>stable</api>
+    </stability>
+    <license uri="https://github.com/kea/php-sdl-mixer/LICENSE">ZLIB</license>
+    <notes>
+        - Initial release
+    </notes>
+    <!-- End Current Release -->
+
+    <contents>
+        <dir name="/">
+            <file name="config.m4" role="src" />
+            <file name="README.md" role="doc" />
+            <file name="LICENSE" role="doc" />
+            <file name="CREDITS" role="doc" />
+            <dir name="src">
+                <file name="chunk.c" role="src" />
+                <file name="chunk.h" role="src" />
+                <file name="music.c" role="src" />
+                <file name="music.h" role="src" />
+                <file name="php_sdl_mixer.c" role="src" />
+                <file name="php_sdl_mixer.h" role="src" />
+                <file name="php_sdl_mixer_arginfo.h" role="src" />
+                <file name="php_sdl_mixer.stub.php" role="src" />
+            </dir>
+            <dir name="tests">
+                <file name="001_extension_load.phpt" role="test" />
+                <file name="002_loadWAV.phpt" role="test" />
+                <file name="003_loadMUS.phpt" role="test" />
+            </dir>
+        </dir>
+    </contents>
+
+    <dependencies>
+        <required>
+            <php>
+                <min>8.0.0</min>
+                <max>8.1.99</max>
+            </php>
+            <pearinstaller>
+                <min>1.9.1</min>
+            </pearinstaller>
+        </required>
+    </dependencies>
+    <providesextension>SDL_image</providesextension>
+    <zendextsrcrelease />
+
+    <changelog>
+    </changelog>
+</package>

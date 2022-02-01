@@ -1,0 +1,15 @@
+{
+    "name": "SDL_mixer",
+    "version": "0.2.0",
+    "type": "extension",
+    "license": [
+        "ZLIB"
+    ],
+    "authors": [
+        {
+            "name": "Manuel Baldassarri",
+            "email": "manuel@baldassarri.me"
+        }
+    ],
+    "description": "Binding of SDL_mixer for PHP"
+}
