@@ -71,8 +71,23 @@
         </required>
     </dependencies>
     <providesextension>SDL_mixer</providesextension>
-    <zendextsrcrelease />
-
+    <extsrcrelease/>
     <changelog>
+        <release>
+            <date>2022-01-02</date>
+            <time>09:00:00</time>
+            <version>
+                <release>0.2.0</release>
+                <api>1.0.0</api>
+            </version>
+            <stability>
+                <release>devel</release>
+                <api>devel</api>
+            </stability>
+            <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
+            <notes>
+                - First release
+            </notes>
+        </release>
     </changelog>
 </package>
