@@ -125,6 +125,19 @@ PHP_FUNCTION(Mix_VolumeMusic)
 	RETURN_LONG(new_volume);
 }
 
+PHP_FUNCTION(Mix_FreeMusic)
+{
+	zval *music;
+	Mix_Music *mix_music = NULL;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1)
+	Z_PARAM_OBJECT_OF_CLASS(music, php_mix_music_ce)
+	ZEND_PARSE_PARAMETERS_END();
+
+	mix_music = mix_music_from_zval(music);
+	Mix_FreeMusic(mix_music);
+}
+
 PHP_FUNCTION(Mix_GetError) {
 	const char *error;
 

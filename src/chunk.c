@@ -126,6 +126,41 @@ PHP_FUNCTION(Mix_PlayChannel)
 	RETURN_LONG(nchannels);
 }
 
+PHP_FUNCTION(Mix_Volume)
+{
+	zend_long channel;
+	zend_long volume;
+	int ret_volume;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+	Z_PARAM_LONG(channel)
+	Z_PARAM_LONG(volume)
+	ZEND_PARSE_PARAMETERS_END();
+
+	ret_volume = Mix_Volume((int)channel, (int)volume);
+
+	RETURN_LONG(ret_volume);
+}
+
+PHP_FUNCTION(Mix_VolumeChunk)
+{
+	zval *zchunk;
+	zend_string *path;
+	Mix_Chunk *mix_chunk = NULL;
+	zend_long volume;
+	int ret_volume;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2)
+	Z_PARAM_OBJECT_OF_CLASS(zchunk, php_mix_chunk_ce)
+	Z_PARAM_LONG(volume)
+	ZEND_PARSE_PARAMETERS_END();
+
+	mix_chunk = mix_chunk_from_zval(zchunk);
+	ret_volume = Mix_VolumeChunk(mix_chunk,(int)volume);
+
+	RETURN_LONG(ret_volume);
+}
+
 PHP_MINIT_FUNCTION(mix_chunk)
 {
 	REGISTER_LONG_CONSTANT("MIX_DEFAULT_CHANNELS", MIX_DEFAULT_CHANNELS, CONST_CS | CONST_PERSISTENT);
