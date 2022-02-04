@@ -70,7 +70,7 @@
             </pearinstaller>
         </required>
     </dependencies>
-    <providesextension>SDL_image</providesextension>
+    <providesextension>SDL_mixer</providesextension>
     <zendextsrcrelease />
 
     <changelog>
