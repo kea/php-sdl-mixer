@@ -44,8 +44,18 @@ PHP_MINIT_FUNCTION(sdl_mixer)
 
 PHP_MINFO_FUNCTION(sdl_mixer)
 {
+	char buffer[128];
+	SDL_version compile_version;
+	const SDL_version *link_version = Mix_Linked_Version();
+	SDL_MIXER_VERSION(&compile_version);
+
 	php_info_print_table_start();
-	php_info_print_table_header(2, "SDL_mixer support", "enabled");
+	php_info_print_table_row(2, "SDL_mixer support", "enabled");
+	php_info_print_table_row(2, "SDL_mixer PHP extension version", PHP_SDL_MIXER_VERSION);
+	snprintf(buffer, sizeof(buffer), "%d.%d.%d", link_version->major, link_version->minor, link_version->patch);
+	php_info_print_table_row(2, "SDL_mixer linked version", buffer);
+	snprintf(buffer, sizeof(buffer), "%d.%d.%d", compile_version.major, compile_version.minor, compile_version.patch);
+	php_info_print_table_row(2, "SDL_mixer compiled version", buffer);
 	php_info_print_table_end();
 }
 
