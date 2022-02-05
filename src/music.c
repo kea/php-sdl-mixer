@@ -107,6 +107,28 @@ PHP_FUNCTION(Mix_PlayMusic)
 	RETURN_BOOL(retval == 0);
 }
 
+PHP_FUNCTION(Mix_QuerySpec)
+{
+	zval *z_frequency = NULL, *z_format = NULL, *z_channels = NULL;
+	int frequency, channels;
+	Uint16  format;
+	int retval;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3)
+	Z_PARAM_ZVAL(z_frequency)
+	Z_PARAM_ZVAL(z_format)
+	Z_PARAM_ZVAL(z_channels)
+	ZEND_PARSE_PARAMETERS_END();
+
+	retval = Mix_QuerySpec(&frequency, &format, &channels);
+
+	ZEND_TRY_ASSIGN_REF_LONG(z_frequency, frequency);
+	ZEND_TRY_ASSIGN_REF_LONG(z_format, format);
+	ZEND_TRY_ASSIGN_REF_LONG(z_channels, channels);
+
+	RETURN_LONG(retval);
+}
+
 /*
     volume < 0 get volume
     volume > 0 set volume
