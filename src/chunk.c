@@ -132,7 +132,7 @@ PHP_FUNCTION(Mix_Volume)
 	zend_long volume;
 	int ret_volume;
 
-	ZEND_PARSE_PARAMETERS_START(3, 3)
+	ZEND_PARSE_PARAMETERS_START(2, 2)
 	Z_PARAM_LONG(channel)
 	Z_PARAM_LONG(volume)
 	ZEND_PARSE_PARAMETERS_END();
