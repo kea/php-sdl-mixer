@@ -4,12 +4,11 @@
    +----------------------------------------------------------------------+
 */
 
-#ifndef PHP_MIX_MUSIC_H
-#define PHP_MIX_MUSIC_H
+#ifndef PHP_MIX_CHUNK_H
+#define PHP_MIX_CHUNK_H
 
 #include "php_sdl_mixer.h"
 #include "SDL_mixer.h"
-
-#include "Mix_Music.h"
+#include "Mix_Chunk.h"
 
 #endif

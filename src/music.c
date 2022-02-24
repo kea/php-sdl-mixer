@@ -1,18 +1,6 @@
 /*
    +----------------------------------------------------------------------+
-   | PHP Version 8                                                        |
-   +----------------------------------------------------------------------+
-   | Copyright (c) 1997-2021 The PHP Group                                |
-   +----------------------------------------------------------------------+
-   | This source file is subject to version 3.01 of the PHP license,      |
-   | that is bundled with this package in the file LICENSE, and is        |
-   | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
-   | If you did not receive a copy of the PHP license and are unable to   |
-   | obtain it through the world-wide-web, please send a note to          |
-   | license@php.net so we can mail you a copy immediately.               |
-   +----------------------------------------------------------------------+
-   | Author: Manuel Baldassarri <manuel@baldassarri.me>                   |
+   | Author: Manuel Baldassarri <manuel@baldassarri.me>				   |
    +----------------------------------------------------------------------+
 */
 
@@ -23,167 +11,300 @@
 
 #include "music.h"
 
-static zend_class_entry *php_mix_music_ce;
-static zend_object_handlers php_mix_music_handlers;
-
-struct php_mix_music
-{
-	Mix_Music *intern;
-	zend_object zo;
-};
-typedef struct php_mix_music php_mix_music_t;
-
-static zend_object *php_mix_music_create_object(zend_class_entry *ce)
-{
-	php_mix_music_t *php_mix_music;
-
-	php_mix_music = (php_mix_music_t *)ecalloc(1, sizeof(php_mix_music_t) + zend_object_properties_size(ce));
-
-	zend_object_std_init(&php_mix_music->zo, ce);
-	object_properties_init(&php_mix_music->zo, ce);
-
-	php_mix_music->intern = NULL;
-	php_mix_music->zo.handlers = (zend_object_handlers *)&php_mix_music_handlers;
-
-	return &php_mix_music->zo;
-}
-
-static void php_mix_music_free_object(zend_object *zo)
-{
-	// Mix_FreeChunk ???
-	php_mix_music_t *php_mix_music = (php_mix_music_t *)((char *)zo - zo->handlers->offset);
-	zend_object_std_dtor(&php_mix_music->zo);
-}
-
-static inline Mix_Music *mix_music_from_zval(zval *zmix_music)
-{
-	zend_object *zo = Z_OBJ_P(zmix_music);
-	php_mix_music_t *php_mix_music = (php_mix_music_t *)((char *)zo - zo->handlers->offset);
-	return php_mix_music->intern;
-}
-
-static inline void mix_music_to_zval(Mix_Music *mix_music, zval *zvalue)
-{
-	object_init_ex(zvalue, php_mix_music_ce);
-	zend_object *zo = Z_OBJ_P(zvalue);
-	php_mix_music_t *php_mix_music = (php_mix_music_t *)((char *)zo - zo->handlers->offset);
-	php_mix_music->intern = mix_music;
-}
+extern zend_class_entry *get_php_sdl_rwops_ce(void);
+extern SDL_RWops *zval_to_sdl_rwops(zval *z_val);
+#define php_sdl_rwops_from_zval_p zval_to_sdl_rwops
 
 PHP_FUNCTION(Mix_LoadMUS)
 {
-	zend_string *path;
-	Mix_Music *mix_music = NULL;
+	char *file = NULL;
+	size_t file_len = 0;
 
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-	Z_PARAM_STR(path)
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_STRING(file, file_len)
 	ZEND_PARSE_PARAMETERS_END();
 
-	mix_music = Mix_LoadMUS(ZSTR_VAL(path));
+	Mix_Music * result = Mix_LoadMUS((const char*)file);
 
-	if (!mix_music) {
+	if (result == NULL) {
 		RETURN_NULL();
 	}
 
-	mix_music_to_zval(mix_music, return_value);
+	mix_music_to_zval(result, return_value);
 }
 
-PHP_FUNCTION(Mix_PlayMusic)
+PHP_FUNCTION(Mix_LoadMUS_RW)
 {
-	zval *music;
-	zend_string *path;
-	Mix_Music *mix_music = NULL;
-	zend_long loops;
-	int retval;
+	zval *SRC;
+	SDL_RWops *src;
 
-	ZEND_PARSE_PARAMETERS_START(2, 2)
-	Z_PARAM_OBJECT_OF_CLASS(music, php_mix_music_ce)
-	Z_PARAM_LONG(loops)
+	zend_long freesrc;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2);
+		Z_PARAM_OBJECT_OF_CLASS(SRC, get_php_sdl_rwops_ce())
+		Z_PARAM_LONG(freesrc)
 	ZEND_PARSE_PARAMETERS_END();
+	src = php_sdl_rwops_from_zval_p(SRC);
 
-	mix_music = mix_music_from_zval(music);
-	retval = Mix_PlayMusic(mix_music,(int)loops);
+	Mix_Music * result = Mix_LoadMUS_RW(src, freesrc);
 
-	RETURN_BOOL(retval == 0);
-}
+	if (result == NULL) {
+		RETURN_NULL();
+	}
 
-PHP_FUNCTION(Mix_QuerySpec)
-{
-	zval *z_frequency = NULL, *z_format = NULL, *z_channels = NULL;
-	int frequency, channels;
-	Uint16  format;
-	int retval;
-
-	ZEND_PARSE_PARAMETERS_START(3, 3)
-	Z_PARAM_ZVAL(z_frequency)
-	Z_PARAM_ZVAL(z_format)
-	Z_PARAM_ZVAL(z_channels)
-	ZEND_PARSE_PARAMETERS_END();
-
-	retval = Mix_QuerySpec(&frequency, &format, &channels);
-
-	ZEND_TRY_ASSIGN_REF_LONG(z_frequency, frequency);
-	ZEND_TRY_ASSIGN_REF_LONG(z_format, format);
-	ZEND_TRY_ASSIGN_REF_LONG(z_channels, channels);
-
-	RETURN_LONG(retval);
-}
-
-/*
-    volume < 0 get volume
-    volume > 0 set volume
-*/
-PHP_FUNCTION(Mix_VolumeMusic)
-{
-	zend_long volume;
-	int new_volume;
-
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-	Z_PARAM_LONG(volume)
-	ZEND_PARSE_PARAMETERS_END();
-
-	new_volume = Mix_VolumeMusic((int)volume);
-
-	RETURN_LONG(new_volume);
+	mix_music_to_zval(result, return_value);
 }
 
 PHP_FUNCTION(Mix_FreeMusic)
 {
-	zval *music;
-	Mix_Music *mix_music = NULL;
+	zval *MUSIC;
+	Mix_Music *music;
 
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-	Z_PARAM_OBJECT_OF_CLASS(music, php_mix_music_ce)
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_OBJECT_OF_CLASS(MUSIC, mix_music_ce)
+	ZEND_PARSE_PARAMETERS_END();
+	music = php_mix_music_from_zval_p(MUSIC);
+	Mix_FreeMusic(music);
+}
+
+PHP_FUNCTION(Mix_GetNumMusicDecoders)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	int result = Mix_GetNumMusicDecoders();
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_GetMusicDecoder)
+{
+	zend_long index;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_LONG(index)
 	ZEND_PARSE_PARAMETERS_END();
 
-	mix_music = mix_music_from_zval(music);
-	Mix_FreeMusic(mix_music);
+	const char * result = Mix_GetMusicDecoder(index);
+
+	RETURN_STRING(result);
 }
 
-PHP_FUNCTION(Mix_GetError) {
-	const char *error;
-
-	if (zend_parse_parameters_none() == FAILURE) {
-		RETURN_THROWS();
-	}
-
-	error = Mix_GetError();
-	if (error) {
-		RETURN_STRING(error);
-	}
-}
-
-PHP_MINIT_FUNCTION(mix_music)
+PHP_FUNCTION(Mix_HasMusicDecoder)
 {
-	zend_class_entry mix_music_ce;
-	INIT_CLASS_ENTRY(mix_music_ce, "Mix_Music", NULL);
+	char *name = NULL;
+	size_t name_len = 0;
 
-	php_mix_music_ce = zend_register_internal_class(&mix_music_ce);
-	php_mix_music_ce->create_object = php_mix_music_create_object;
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_STRING(name, name_len)
+	ZEND_PARSE_PARAMETERS_END();
 
-	memcpy(&php_mix_music_handlers, zend_get_std_object_handlers(), sizeof(zend_object_handlers));
-	php_mix_music_handlers.free_obj = php_mix_music_free_object;
-	php_mix_music_handlers.offset = XtOffsetOf(php_mix_music_t, zo);
+	SDL_bool result = Mix_HasMusicDecoder((const char*)name);
 
-	return SUCCESS;
+	RETURN_BOOL(result == SDL_TRUE);
+}
+
+PHP_FUNCTION(Mix_PlayMusic)
+{
+	zval *MUSIC;
+	Mix_Music *music;
+
+	zend_long loops;
+
+	ZEND_PARSE_PARAMETERS_START(2, 2);
+		Z_PARAM_OBJECT_OF_CLASS(MUSIC, mix_music_ce)
+		Z_PARAM_LONG(loops)
+	ZEND_PARSE_PARAMETERS_END();
+	music = php_mix_music_from_zval_p(MUSIC);
+
+	int result = Mix_PlayMusic(music, loops);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_FadeInMusic)
+{
+	zval *MUSIC;
+	Mix_Music *music;
+
+	zend_long loops;
+
+	zend_long ms;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3);
+		Z_PARAM_OBJECT_OF_CLASS(MUSIC, mix_music_ce)
+		Z_PARAM_LONG(loops)
+		Z_PARAM_LONG(ms)
+	ZEND_PARSE_PARAMETERS_END();
+	music = php_mix_music_from_zval_p(MUSIC);
+
+	int result = Mix_FadeInMusic(music, loops, ms);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_FadeInMusicPos)
+{
+	zval *MUSIC;
+	Mix_Music *music;
+	zend_long loops;
+	zend_long ms;
+	double position;
+
+	ZEND_PARSE_PARAMETERS_START(3, 3);
+		Z_PARAM_OBJECT_OF_CLASS(MUSIC, mix_music_ce)
+		Z_PARAM_LONG(loops)
+		Z_PARAM_LONG(ms)
+		Z_PARAM_DOUBLE(position)
+	ZEND_PARSE_PARAMETERS_END();
+	music = php_mix_music_from_zval_p(MUSIC);
+
+	int result = Mix_FadeInMusicPos(music, loops, ms, position);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_VolumeMusic)
+{
+	zend_long volume;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_LONG(volume)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_VolumeMusic(volume);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_HaltMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	int result = Mix_HaltMusic();
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_FadeOutMusic)
+{
+	zend_long ms;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_LONG(ms)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_FadeOutMusic(ms);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_PauseMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	Mix_PauseMusic();
+}
+
+PHP_FUNCTION(Mix_ResumeMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	Mix_ResumeMusic();
+}
+
+PHP_FUNCTION(Mix_RewindMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	Mix_RewindMusic();
+}
+
+PHP_FUNCTION(Mix_PausedMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	int result = Mix_PausedMusic();
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_SetMusicPosition)
+{
+	double position;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+	Z_PARAM_DOUBLE(position)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_SetMusicPosition(position);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_PlayingMusic)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	int result = Mix_PlayingMusic();
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_SetMusicCMD)
+{
+	char *command = NULL;
+	size_t command_len = 0;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_STRING(command, command_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_SetMusicCMD((const char*)command);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_SetSynchroValue)
+{
+	zend_long value;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_LONG(value)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_SetSynchroValue(value);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_GetSynchroValue)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	int result = Mix_GetSynchroValue();
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_SetSoundFonts)
+{
+	char *paths = NULL;
+	size_t paths_len = 0;
+
+	ZEND_PARSE_PARAMETERS_START(1, 1);
+		Z_PARAM_STRING(paths, paths_len)
+	ZEND_PARSE_PARAMETERS_END();
+
+	int result = Mix_SetSoundFonts((const char*)paths);
+
+	RETURN_LONG(result);
+}
+
+PHP_FUNCTION(Mix_GetSoundFonts)
+{
+	ZEND_PARSE_PARAMETERS_NONE();
+
+	const char* result = Mix_GetSoundFonts();
+
+	RETURN_STRING(result);
 }
