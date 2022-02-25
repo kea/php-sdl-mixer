@@ -1,13 +1,6 @@
-/*
-   +----------------------------------------------------------------------+
-   | Author: Manuel Baldassarri <manuel@baldassarri.me>                   |
-   +----------------------------------------------------------------------+
-*/
-
 #include "php_sdl_mixer.h"
 #include "mixer.h"
 #include "music.h"
-#include "php_sdl_mixer_arginfo.h"
 
 #ifdef COMPILE_DL_SDL_MIXER
 ZEND_GET_MODULE(sdl_mixer)
@@ -15,20 +8,21 @@ ZEND_GET_MODULE(sdl_mixer)
 
 #define PHP_MINIT_CALL(func) PHP_MINIT(func)(INIT_FUNC_ARGS_PASSTHRU)
 
+/* {{{ PHP_MINIT_FUNCTION */
 PHP_MINIT_FUNCTION(sdl_mixer)
 {
-#if defined(ZTS) && defined(COMPILE_DL_SDL_MIXER)
-	ZEND_TSRMLS_CACHE_UPDATE();
-#endif
+	php_mix_chunk_minit_helper();
+	php_mix_music_minit_helper();
 
-	if (SUCCESS == PHP_MINIT_CALL(mix_chunk)
-		&& SUCCESS == PHP_MINIT_CALL(mix_music)
-	) {
-		return SUCCESS;
-	}
+    REGISTER_LONG_CONSTANT("MIX_DEFAULT_CHANNELS", MIX_DEFAULT_CHANNELS, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("MIX_DEFAULT_FREQUENCY", MIX_DEFAULT_FREQUENCY, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("MIX_DEFAULT_FORMAT", MIX_DEFAULT_FORMAT, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("MIX_MAX_VOLUME", MIX_MAX_VOLUME, CONST_CS | CONST_PERSISTENT);
+    REGISTER_LONG_CONSTANT("MIX_CHANNELS", MIX_CHANNELS, CONST_CS | CONST_PERSISTENT);
 
-    return FAILURE;
+	return SUCCESS;
 }
+/* }}} */
 
 PHP_MINFO_FUNCTION(sdl_mixer)
 {

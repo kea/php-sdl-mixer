@@ -1,9 +1,3 @@
-/*
-   +----------------------------------------------------------------------+
-   | Author: Manuel Baldassarri <manuel@baldassarri.me>                   |
-   +----------------------------------------------------------------------+
-*/
-
 #ifndef PHP_SDL_MIXER_H
 #define PHP_SDL_MIXER_H
 
@@ -28,6 +22,7 @@ extern "C" {
 
 #include <php.h>
 #include <ext/standard/info.h>
+#include "SDL_mixer.h"
 #include "php_sdl_mixer_arginfo.h"
 
 #ifdef  __cplusplus

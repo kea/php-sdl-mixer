@@ -1,16 +1,10 @@
-/*
-   +----------------------------------------------------------------------+
-   | Author: Manuel Baldassarri <manuel@baldassarri.me>				   |
-   +----------------------------------------------------------------------+
-*/
-
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
 
 #include "music.h"
 
+extern zend_class_entry *mix_music_ce;
 extern zend_class_entry *get_php_sdl_rwops_ce(void);
 extern SDL_RWops *zval_to_sdl_rwops(zval *z_val);
 #define php_sdl_rwops_from_zval_p zval_to_sdl_rwops
@@ -150,7 +144,7 @@ PHP_FUNCTION(Mix_FadeInMusicPos)
 	zend_long ms;
 	double position;
 
-	ZEND_PARSE_PARAMETERS_START(3, 3);
+	ZEND_PARSE_PARAMETERS_START(4, 4);
 		Z_PARAM_OBJECT_OF_CLASS(MUSIC, mix_music_ce)
 		Z_PARAM_LONG(loops)
 		Z_PARAM_LONG(ms)
@@ -233,7 +227,7 @@ PHP_FUNCTION(Mix_SetMusicPosition)
 	double position;
 
 	ZEND_PARSE_PARAMETERS_START(1, 1);
-	Z_PARAM_DOUBLE(position)
+		Z_PARAM_DOUBLE(position)
 	ZEND_PARSE_PARAMETERS_END();
 
 	int result = Mix_SetMusicPosition(position);

@@ -1,3 +1,9 @@
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include "effect_position.h"
+
 PHP_FUNCTION(Mix_SetReverseStereo)
 {
     zend_long channel;

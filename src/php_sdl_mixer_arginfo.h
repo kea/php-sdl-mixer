@@ -1,8 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: d2ec244145675098bb2e20dae88a267b2721fda8 */
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Mix_Linked_Version, 0, 0, SDL_version, 0)
-ZEND_END_ARG_INFO()
+ * Stub hash: 1a36e3ed90a9a7c0ff05a89516ad4bcec0ef0d44 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_Init, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
@@ -42,11 +39,8 @@ ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Mix_LoadWAV_RW, 0, 2, Mix_Chunk, 
 	ZEND_ARG_TYPE_INFO(0, freesrc, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Mix_QuickLoad_WAV, 0, 0, Mix_Chunk, 0)
-ZEND_END_ARG_INFO()
-
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Mix_QuickLoad_RAW, 0, 1, Mix_Chunk, 0)
-	ZEND_ARG_TYPE_INFO(0, len, IS_LONG, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_Mix_LoadWAV, 0, 1, Mix_Chunk, 0)
+	ZEND_ARG_TYPE_INFO(0, file, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_FreeChunk, 0, 1, IS_VOID, 0)
@@ -88,6 +82,12 @@ ZEND_END_ARG_INFO()
 #define arginfo_Mix_GroupOldest arginfo_Mix_GroupAvailable
 
 #define arginfo_Mix_GroupNewer arginfo_Mix_GroupAvailable
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_PlayChannel, 0, 3, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, chunk, Mix_Chunk, 0)
+	ZEND_ARG_TYPE_INFO(0, loops, IS_LONG, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_PlayChannelTimed, 0, 4, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
@@ -181,7 +181,12 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_FadeInMusic, 0, 3, IS_LONG, 
 	ZEND_ARG_TYPE_INFO(0, ms, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_Mix_FadeInMusicPos arginfo_Mix_FadeInMusic
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_FadeInMusicPos, 0, 4, IS_LONG, 0)
+	ZEND_ARG_OBJ_INFO(0, music, Mix_Music, 0)
+	ZEND_ARG_TYPE_INFO(0, loops, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, ms, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, position, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_VolumeMusic, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, volume, IS_LONG, 0)
@@ -201,7 +206,9 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_Mix_PausedMusic arginfo_Mix_GetNumChunkDecoders
 
-#define arginfo_Mix_SetMusicPosition arginfo_Mix_GetNumChunkDecoders
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_SetMusicPosition, 0, 1, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, position, IS_DOUBLE, 0)
+ZEND_END_ARG_INFO()
 
 #define arginfo_Mix_PlayingMusic arginfo_Mix_GetNumChunkDecoders
 
@@ -222,17 +229,29 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_GetSoundFonts, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
-#define arginfo_Mix_SetPosition arginfo_Mix_HaltChannel
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_SetPosition, 0, 3, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, angle, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, distance, IS_LONG, 0)
+ZEND_END_ARG_INFO()
 
-#define arginfo_Mix_SetDistance arginfo_Mix_HaltChannel
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_SetDistance, 0, 2, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, distance, IS_LONG, 0)
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_SetReverseStereo, 0, 2, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, channel, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flip, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
+#define arginfo_Mix_SetError arginfo_Mix_GetSoundFonts
 
-ZEND_FUNCTION(Mix_Linked_Version);
+#define arginfo_Mix_GetError arginfo_Mix_GetSoundFonts
+
+#define arginfo_Mix_ClearError arginfo_Mix_GetSoundFonts
+
+
 ZEND_FUNCTION(Mix_Init);
 ZEND_FUNCTION(Mix_Quit);
 ZEND_FUNCTION(Mix_OpenAudio);
@@ -240,8 +259,7 @@ ZEND_FUNCTION(Mix_OpenAudioDevice);
 ZEND_FUNCTION(Mix_AllocateChannels);
 ZEND_FUNCTION(Mix_QuerySpec);
 ZEND_FUNCTION(Mix_LoadWAV_RW);
-ZEND_FUNCTION(Mix_QuickLoad_WAV);
-ZEND_FUNCTION(Mix_QuickLoad_RAW);
+ZEND_FUNCTION(Mix_LoadWAV);
 ZEND_FUNCTION(Mix_FreeChunk);
 ZEND_FUNCTION(Mix_GetNumChunkDecoders);
 ZEND_FUNCTION(Mix_GetChunkDecoder);
@@ -253,6 +271,7 @@ ZEND_FUNCTION(Mix_GroupAvailable);
 ZEND_FUNCTION(Mix_GroupCount);
 ZEND_FUNCTION(Mix_GroupOldest);
 ZEND_FUNCTION(Mix_GroupNewer);
+ZEND_FUNCTION(Mix_PlayChannel);
 ZEND_FUNCTION(Mix_PlayChannelTimed);
 ZEND_FUNCTION(Mix_FadeInChannelTimed);
 ZEND_FUNCTION(Mix_Volume);
@@ -294,10 +313,12 @@ ZEND_FUNCTION(Mix_GetSoundFonts);
 ZEND_FUNCTION(Mix_SetPosition);
 ZEND_FUNCTION(Mix_SetDistance);
 ZEND_FUNCTION(Mix_SetReverseStereo);
+ZEND_FUNCTION(SDL_SetError);
+ZEND_FUNCTION(SDL_GetError);
+ZEND_FUNCTION(SDL_ClearError);
 
 
 static const zend_function_entry ext_functions[] = {
-	ZEND_FE(Mix_Linked_Version, arginfo_Mix_Linked_Version)
 	ZEND_FE(Mix_Init, arginfo_Mix_Init)
 	ZEND_FE(Mix_Quit, arginfo_Mix_Quit)
 	ZEND_FE(Mix_OpenAudio, arginfo_Mix_OpenAudio)
@@ -305,8 +326,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(Mix_AllocateChannels, arginfo_Mix_AllocateChannels)
 	ZEND_FE(Mix_QuerySpec, arginfo_Mix_QuerySpec)
 	ZEND_FE(Mix_LoadWAV_RW, arginfo_Mix_LoadWAV_RW)
-	ZEND_FE(Mix_QuickLoad_WAV, arginfo_Mix_QuickLoad_WAV)
-	ZEND_FE(Mix_QuickLoad_RAW, arginfo_Mix_QuickLoad_RAW)
+	ZEND_FE(Mix_LoadWAV, arginfo_Mix_LoadWAV)
 	ZEND_FE(Mix_FreeChunk, arginfo_Mix_FreeChunk)
 	ZEND_FE(Mix_GetNumChunkDecoders, arginfo_Mix_GetNumChunkDecoders)
 	ZEND_FE(Mix_GetChunkDecoder, arginfo_Mix_GetChunkDecoder)
@@ -318,6 +338,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(Mix_GroupCount, arginfo_Mix_GroupCount)
 	ZEND_FE(Mix_GroupOldest, arginfo_Mix_GroupOldest)
 	ZEND_FE(Mix_GroupNewer, arginfo_Mix_GroupNewer)
+	ZEND_FE(Mix_PlayChannel, arginfo_Mix_PlayChannel)
 	ZEND_FE(Mix_PlayChannelTimed, arginfo_Mix_PlayChannelTimed)
 	ZEND_FE(Mix_FadeInChannelTimed, arginfo_Mix_FadeInChannelTimed)
 	ZEND_FE(Mix_Volume, arginfo_Mix_Volume)
@@ -359,6 +380,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(Mix_SetPosition, arginfo_Mix_SetPosition)
 	ZEND_FE(Mix_SetDistance, arginfo_Mix_SetDistance)
 	ZEND_FE(Mix_SetReverseStereo, arginfo_Mix_SetReverseStereo)
+	ZEND_FALIAS(Mix_SetError, SDL_SetError, arginfo_Mix_SetError)
+	ZEND_FALIAS(Mix_GetError, SDL_GetError, arginfo_Mix_GetError)
+	ZEND_FALIAS(Mix_ClearError, SDL_ClearError, arginfo_Mix_ClearError)
 	ZEND_FE_END
 };
 

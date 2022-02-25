@@ -34,6 +34,6 @@ if test "$PHP_SDL_MIXER" != "no"; then
 
   PHP_SUBST(SDL_MIXER_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(sdl_mixer, src/music.c src/chunk.c src/php_sdl_mixer.c, $ext_shared)
+  PHP_NEW_EXTENSION(sdl_mixer, src/effect_position.c src/effect_stereoreverse.c src/Mix_Music.c src/Mix_Chunk.c src/music.c src/mixer.c src/php_sdl_mixer.c, $ext_shared)
   PHP_ADD_EXTENSION_DEP(sdl_mixer, sdl)
 fi
