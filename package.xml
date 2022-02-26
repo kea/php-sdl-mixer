@@ -42,19 +42,28 @@
             <file name="LICENSE" role="doc" />
             <file name="CREDITS" role="doc" />
             <dir name="src">
-                <file name="chunk.c" role="src" />
-                <file name="chunk.h" role="src" />
+                <file name="effect_position.c" role="src" />
+                <file name="effect_position.h" role="src" />
+                <file name="effect_stereoreverse.c" role="src" />
+                <file name="effect_stereoreverse.h" role="src" />
+                <file name="Mix_Chunk.c" role="src" />
+                <file name="Mix_Chunk.h" role="src" />
+                <file name="Mix_Music.c" role="src" />
+                <file name="Mix_Music.h" role="src" />
+                <file name="mixer.c" role="src" />
+                <file name="mixer.h" role="src" />
                 <file name="music.c" role="src" />
                 <file name="music.h" role="src" />
                 <file name="php_sdl_mixer.c" role="src" />
                 <file name="php_sdl_mixer.h" role="src" />
-                <file name="php_sdl_mixer_arginfo.h" role="src" />
                 <file name="php_sdl_mixer.stub.php" role="src" />
+                <file name="php_sdl_mixer_arginfo.h" role="src" />
             </dir>
             <dir name="tests">
                 <file name="001_extension_load.phpt" role="test" />
                 <file name="002_loadWAV.phpt" role="test" />
                 <file name="003_loadMUS.phpt" role="test" />
+                <file name="004_audio_query.phpt" role="test" />
             </dir>
         </dir>
     </contents>
