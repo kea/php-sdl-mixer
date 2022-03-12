@@ -5,7 +5,7 @@
         xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
-    <name>SDL_mixer</name>
+    <name>sdl_mixer</name>
     <channel>pecl.php.net</channel>
     <summary>Binding of SDL_mixer for PHP</summary>
     <description>
@@ -19,15 +19,15 @@
     </lead>
 
     <!-- Current Release -->
-    <date>2022-02-01</date>
-    <time>09:00:00</time>
+    <date>2022-03-12</date>
+    <time>08:00:00</time>
     <version>
-        <release>0.2.0</release>
+        <release>0.3.0</release>
         <api>1.0.0</api>
     </version>
     <stability>
-        <release>stable</release>
-        <api>stable</api>
+        <release>devel</release>
+        <api>devel</api>
     </stability>
     <license uri="https://github.com/kea/php-sdl-mixer/LICENSE">ZLIB</license>
     <notes>
@@ -64,6 +64,7 @@
                 <file name="002_loadWAV.phpt" role="test" />
                 <file name="003_loadMUS.phpt" role="test" />
                 <file name="004_audio_query.phpt" role="test" />
+                <file name="boing.ogg" role="test" />
             </dir>
         </dir>
     </contents>
@@ -83,8 +84,24 @@
     <extsrcrelease/>
     <changelog>
         <release>
-            <date>2022-01-02</date>
-            <time>09:00:00</time>
+            <date>2022-03-12</date>
+            <time>08:00:00</time>
+            <version>
+                <release>0.3.0</release>
+                <api>1.0.0</api>
+            </version>
+            <stability>
+                <release>devel</release>
+                <api>devel</api>
+            </stability>
+            <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
+            <notes>
+                - Fix wrong file added to pecl package
+            </notes>
+        </release>
+        <release>
+            <date>2022-03-11</date>
+            <time>22:00:00</time>
             <version>
                 <release>0.2.0</release>
                 <api>1.0.0</api>
