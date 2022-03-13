@@ -30,6 +30,10 @@ if test "$PHP_SDL_MIXER" != "no"; then
       AC_MSG_ERROR([libSDL2_mixer not found!])
     ])
 
+    AC_CHECK_LIB(SDL2_mixer, Mix_HasMusicDecoder, [
+      AC_DEFINE(HAVE_MIX_HASMUSICDECODER, 1, [ Have sdl_mixer support ])
+    ])
+
   AC_DEFINE(HAVE_SDL_MIXER, 1, [ Have sdl_mixer support ])
 
   PHP_SUBST(SDL_MIXER_SHARED_LIBADD)

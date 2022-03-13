@@ -83,6 +83,7 @@ PHP_FUNCTION(Mix_GetMusicDecoder)
 	RETURN_STRING(result);
 }
 
+#if defined(HAVE_MIX_HASMUSICDECODER)
 PHP_FUNCTION(Mix_HasMusicDecoder)
 {
 	char *name = NULL;
@@ -96,6 +97,7 @@ PHP_FUNCTION(Mix_HasMusicDecoder)
 
 	RETURN_BOOL(result == SDL_TRUE);
 }
+#endif
 
 PHP_FUNCTION(Mix_PlayMusic)
 {
