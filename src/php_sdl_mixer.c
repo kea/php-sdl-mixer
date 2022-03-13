@@ -41,8 +41,15 @@ PHP_MINFO_FUNCTION(sdl_mixer)
 	php_info_print_table_end();
 }
 
+static const zend_module_dep ext_deps[] = {
+    ZEND_MOD_REQUIRED("sdl")
+    ZEND_MOD_END
+};
+
 zend_module_entry sdl_mixer_module_entry = {
-	STANDARD_MODULE_HEADER,
+	STANDARD_MODULE_HEADER_EX,
+	NULL,
+	ext_deps,
 	"SDL_mixer",
 	ext_functions,
 	PHP_MINIT(sdl_mixer),

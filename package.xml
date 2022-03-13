@@ -78,6 +78,12 @@
             <pearinstaller>
                 <min>1.9.1</min>
             </pearinstaller>
+            <package>
+                <name>sdl</name>
+                <channel>pecl.php.net</channel>
+                <min>2.5.0</min>
+                <providesextension>sdl</providesextension>
+            </package>
         </required>
     </dependencies>
     <providesextension>SDL_mixer</providesextension>
