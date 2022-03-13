@@ -1,6 +1,9 @@
 <?php
 
-/** @generate-class-entries */
+/**
+ * @generate-function-entries
+ * @generate-class-entries
+ */
 
 function Mix_Init(int $flags): int {}
 function Mix_Quit(): void {}
@@ -42,7 +45,9 @@ function Mix_LoadMUS_RW(SDL_RWops $src, int $freesrc): Mix_Music {}
 function Mix_FreeMusic(Mix_Music $music): void {}
 function Mix_GetNumMusicDecoders(): int {}
 function Mix_GetMusicDecoder(int $index): string {}
+#ifdef HAVE_MIX_HASMUSICDECODER
 function Mix_HasMusicDecoder(string $name): bool {}
+#endif
 function Mix_PlayMusic(Mix_Music $music, int $loops): int {}
 function Mix_FadeInMusic(Mix_Music $music, int $loops, int $ms): int {}
 function Mix_FadeInMusicPos(Mix_Music $music, int $loops, int $ms, float $position): int {}

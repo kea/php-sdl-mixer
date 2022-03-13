@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 1a36e3ed90a9a7c0ff05a89516ad4bcec0ef0d44 */
+ * Stub hash: 0dec727e1d30954b0817f144d4e81e938a9f2d3c */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_Init, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
@@ -168,7 +168,11 @@ ZEND_END_ARG_INFO()
 
 #define arginfo_Mix_GetMusicDecoder arginfo_Mix_GetChunkDecoder
 
-#define arginfo_Mix_HasMusicDecoder arginfo_Mix_HasChunkDecoder
+#if defined(HAVE_MIX_HASMUSICDECODER)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_HasMusicDecoder, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, name, IS_STRING, 0)
+ZEND_END_ARG_INFO()
+#endif
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_PlayMusic, 0, 2, IS_LONG, 0)
 	ZEND_ARG_OBJ_INFO(0, music, Mix_Music, 0)
@@ -292,7 +296,9 @@ ZEND_FUNCTION(Mix_LoadMUS_RW);
 ZEND_FUNCTION(Mix_FreeMusic);
 ZEND_FUNCTION(Mix_GetNumMusicDecoders);
 ZEND_FUNCTION(Mix_GetMusicDecoder);
+#if defined(HAVE_MIX_HASMUSICDECODER)
 ZEND_FUNCTION(Mix_HasMusicDecoder);
+#endif
 ZEND_FUNCTION(Mix_PlayMusic);
 ZEND_FUNCTION(Mix_FadeInMusic);
 ZEND_FUNCTION(Mix_FadeInMusicPos);
@@ -359,7 +365,9 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(Mix_FreeMusic, arginfo_Mix_FreeMusic)
 	ZEND_FE(Mix_GetNumMusicDecoders, arginfo_Mix_GetNumMusicDecoders)
 	ZEND_FE(Mix_GetMusicDecoder, arginfo_Mix_GetMusicDecoder)
+#if defined(HAVE_MIX_HASMUSICDECODER)
 	ZEND_FE(Mix_HasMusicDecoder, arginfo_Mix_HasMusicDecoder)
+#endif
 	ZEND_FE(Mix_PlayMusic, arginfo_Mix_PlayMusic)
 	ZEND_FE(Mix_FadeInMusic, arginfo_Mix_FadeInMusic)
 	ZEND_FE(Mix_FadeInMusicPos, arginfo_Mix_FadeInMusicPos)
