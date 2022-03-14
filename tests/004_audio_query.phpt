@@ -13,6 +13,7 @@ if (\Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
     throw new RuntimeException("Cannot open audio device");
 }
 
+Mix_ClearError();
 $opened = \Mix_QuerySpec($frequency, $format, $channels);
 var_dump($opened);
 var_dump($frequency);
