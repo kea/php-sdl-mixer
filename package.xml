@@ -19,19 +19,22 @@
     </lead>
 
     <!-- Current Release -->
-    <date>2022-03-12</date>
-    <time>08:00:00</time>
+    <date>2022-03-14</date>
+    <time>22:00:00</time>
     <version>
-        <release>0.3.0</release>
+        <release>0.4.0</release>
         <api>1.0.0</api>
     </version>
     <stability>
         <release>devel</release>
         <api>devel</api>
     </stability>
-    <license uri="https://github.com/kea/php-sdl-mixer/LICENSE">ZLIB</license>
+    <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
     <notes>
-        - Initial release
+        - Fix SDL extension dependency (remicollet)
+        - Add workaround for Mix_HasMusicDecoder where not available (remicollet)
+        - Properly init/quit sdl_mixer library (remicollet)
+        - Improve phpinfo with Mix_Init supported flags (remicollet)
     </notes>
     <!-- End Current Release -->
 
@@ -77,7 +80,6 @@
         <required>
             <php>
                 <min>8.0.0</min>
-                <max>8.1.99</max>
             </php>
             <pearinstaller>
                 <min>1.9.1</min>
