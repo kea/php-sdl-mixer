@@ -1,4 +1,5 @@
 #include "Mix_Music.h"
+#include "Mix_Music_arginfo.h"
 
 zend_class_entry *mix_music_ce = NULL;
 zend_object_handlers php_mix_music_object_handlers;

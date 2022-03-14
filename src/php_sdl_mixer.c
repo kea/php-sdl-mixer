@@ -1,6 +1,7 @@
 #include "php_sdl_mixer.h"
 #include "mixer.h"
 #include "music.h"
+#include "php_sdl_mixer_arginfo.h"
 
 #ifdef COMPILE_DL_SDL_MIXER
 ZEND_GET_MODULE(sdl_mixer)
