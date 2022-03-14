@@ -4,9 +4,6 @@
 
 #include "mixer.h"
 
-static zend_class_entry *php_mix_chunk_ce;
-static zend_object_handlers php_mix_chunk_handlers;
-
 extern zend_class_entry *mix_chunk_ce;
 extern zend_class_entry *get_php_sdl_rwops_ce(void);
 extern SDL_RWops *zval_to_sdl_rwops(zval *z_val);

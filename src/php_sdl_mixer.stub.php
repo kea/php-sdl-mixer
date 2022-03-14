@@ -76,5 +76,3 @@ function Mix_GetError(): string {}
 /** @alias SDL_ClearError */
 function Mix_ClearError(): string {}
 
-final class Mix_Chunk {}
-final class Mix_Music {}

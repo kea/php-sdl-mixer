@@ -48,8 +48,12 @@
                 <file name="effect_stereoreverse.h" role="src" />
                 <file name="Mix_Chunk.c" role="src" />
                 <file name="Mix_Chunk.h" role="src" />
+                <file name="Mix_Chunk.stub.php" role="src" />
+                <file name="Mix_Chunk_arginfo.h" role="src" />
                 <file name="Mix_Music.c" role="src" />
                 <file name="Mix_Music.h" role="src" />
+                <file name="Mix_Music.stub.php" role="src" />
+                <file name="Mix_Music_arginfo.h" role="src" />
                 <file name="mixer.c" role="src" />
                 <file name="mixer.h" role="src" />
                 <file name="music.c" role="src" />

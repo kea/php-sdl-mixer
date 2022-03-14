@@ -1,4 +1,5 @@
 #include "Mix_Chunk.h"
+#include "Mix_Chunk_arginfo.h"
 
 zend_class_entry *mix_chunk_ce = NULL;
 zend_object_handlers php_mix_chunk_object_handlers;

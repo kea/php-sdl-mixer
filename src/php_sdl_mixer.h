@@ -23,7 +23,6 @@ extern "C" {
 #include <php.h>
 #include <ext/standard/info.h>
 #include "SDL_mixer.h"
-#include "php_sdl_mixer_arginfo.h"
 
 #ifdef  __cplusplus
 } // extern "C"

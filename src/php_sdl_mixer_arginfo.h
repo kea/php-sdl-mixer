@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 0dec727e1d30954b0817f144d4e81e938a9f2d3c */
+ * Stub hash: 06f9569d612687e9fe0e904dcce9ebd88f9e6997 */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_Mix_Init, 0, 1, IS_LONG, 0)
 	ZEND_ARG_TYPE_INFO(0, flags, IS_LONG, 0)
@@ -393,35 +393,3 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FALIAS(Mix_ClearError, SDL_ClearError, arginfo_Mix_ClearError)
 	ZEND_FE_END
 };
-
-
-static const zend_function_entry class_Mix_Chunk_methods[] = {
-	ZEND_FE_END
-};
-
-
-static const zend_function_entry class_Mix_Music_methods[] = {
-	ZEND_FE_END
-};
-
-static zend_class_entry *register_class_Mix_Chunk(void)
-{
-	zend_class_entry ce, *class_entry;
-
-	INIT_CLASS_ENTRY(ce, "Mix_Chunk", class_Mix_Chunk_methods);
-	class_entry = zend_register_internal_class_ex(&ce, NULL);
-	class_entry->ce_flags |= ZEND_ACC_FINAL;
-
-	return class_entry;
-}
-
-static zend_class_entry *register_class_Mix_Music(void)
-{
-	zend_class_entry ce, *class_entry;
-
-	INIT_CLASS_ENTRY(ce, "Mix_Music", class_Mix_Music_methods);
-	class_entry = zend_register_internal_class_ex(&ce, NULL);
-	class_entry->ce_flags |= ZEND_ACC_FINAL;
-
-	return class_entry;
-}
