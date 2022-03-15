@@ -36,6 +36,7 @@ if test "$PHP_SDL_MIXER" != "no"; then
 
   AC_DEFINE(HAVE_SDL_MIXER, 1, [ Have sdl_mixer support ])
 
+  PHP_ADD_BUILD_DIR(PHP_EXT_BUILDDIR(sdl_mixer)[/src])
   PHP_SUBST(SDL_MIXER_SHARED_LIBADD)
 
   PHP_NEW_EXTENSION(sdl_mixer, src/effect_position.c src/effect_stereoreverse.c src/Mix_Music.c src/Mix_Chunk.c src/music.c src/mixer.c src/php_sdl_mixer.c, $ext_shared)

@@ -19,8 +19,8 @@
     </lead>
 
     <!-- Current Release -->
-    <date>2022-03-14</date>
-    <time>22:00:00</time>
+    <date>2022-03-15</date>
+    <time>14:00:00</time>
     <version>
         <release>0.4.0</release>
         <api>1.0.0</api>
@@ -35,6 +35,7 @@
         - Add workaround for Mix_HasMusicDecoder where not available (remicollet)
         - Properly init/quit sdl_mixer library (remicollet)
         - Improve phpinfo with Mix_Init supported flags (remicollet)
+        - Add missing 'src' build directory in config.m4 (kea)
     </notes>
     <!-- End Current Release -->
 
