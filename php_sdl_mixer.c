@@ -1,6 +1,6 @@
 #include "php_sdl_mixer.h"
-#include "mixer.h"
-#include "music.h"
+#include "src/mixer.h"
+#include "src/music.h"
 #include "php_sdl_mixer_arginfo.h"
 #include "zend_smart_string.h"
 
