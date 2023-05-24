@@ -28,7 +28,7 @@ jobs:
       - name: "Build SDL2_mixer extension"
         run: |
           sudo apt-get update -qq
-          sudo usermod -a -G audio github
+          sudo usermod -a -G audio runner
           sudo apt-get install -y portaudio19-dev
           sudo apt-get install -y libasound2-dev alsa-utils alsa-oss
           sudo apt-get install -y lame
