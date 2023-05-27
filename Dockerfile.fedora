@@ -13,6 +13,6 @@ WORKDIR /tmp/sdl_mixer
 COPY . .
 
 RUN echo 'extension=sdl.so' > `php-config --ini-dir`/20-sdl.ini
-RUN phpize && ./configure && make && make install
+RUN phpize && ./configure && make && make install && chmod a+x run-tests.php
 
 CMD SDL_AUDIODRIVER="dummy" ./run-tests.php -d extension=sdl_mixer --offline --show-diff -q

@@ -1,11 +1,7 @@
 --TEST--
-sdl_mixer_test1() Basic test
---SKIPIF--
-<?php
-if (!extension_loaded('SDL_mixer')) {
-	echo 'skip';
-}
-?>
+Mix_OpenAudio, Mix_ClearError, Mix_QuerySpec, Mix_GetError
+--EXTENSIONS--
+SDL_mixer
 --FILE--
 <?php
 
