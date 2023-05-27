@@ -1,0 +1,19 @@
+FROM ubuntu:23.04
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+RUN apt-get install -y \
+    libsdl2-mixer-dev \
+    php8.1-cli php8.1-dev
+
+RUN pecl install sdl-beta
+
+RUN mkdir -p /tmp/sdl_mixer
+
+WORKDIR /tmp/sdl_mixer
+
+COPY . .
+
+RUN echo 'extension=sdl.so' > `php-config --ini-dir`/20-sdl.ini
+RUN phpize && ./configure && make && make install
+
+CMD SDL_AUDIODRIVER="dummy" ./run-tests.php -d extension=sdl_mixer --offline --show-diff -q

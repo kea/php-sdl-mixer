@@ -1,0 +1,18 @@
+FROM fedora:38
+
+RUN dnf install -y php-devel php-pear
+
+RUN yum install -y SDL2-devel SDL2_mixer-devel
+
+RUN pecl install sdl-beta
+
+RUN mkdir -p /tmp/sdl_mixer
+
+WORKDIR /tmp/sdl_mixer
+
+COPY . .
+
+RUN echo 'extension=sdl.so' > `php-config --ini-dir`/20-sdl.ini
+RUN phpize && ./configure && make && make install
+
+CMD SDL_AUDIODRIVER="dummy" ./run-tests.php -d extension=sdl_mixer --offline --show-diff -q
