@@ -19,23 +19,20 @@
     </lead>
 
     <!-- Current Release -->
-    <date>2022-03-15</date>
-    <time>14:00:00</time>
+    <date>2023-05-30</date>
+    <time>19:00:00</time>
     <version>
-        <release>0.4.0</release>
+        <release>1.0.0</release>
         <api>1.0.0</api>
     </version>
     <stability>
-        <release>devel</release>
-        <api>devel</api>
+        <release>stable</release>
+        <api>stable</api>
     </stability>
     <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
     <notes>
-        - Fix SDL extension dependency (remicollet)
-        - Add workaround for Mix_HasMusicDecoder where not available (remicollet)
-        - Properly init/quit sdl_mixer library (remicollet)
-        - Improve phpinfo with Mix_Init supported flags (remicollet)
-        - Add missing 'src' build directory in config.m4 (kea)
+        - add check for SDL2 lib in config.m4
+        - move .h main file in root folder for php-src extension compatibility
     </notes>
     <!-- End Current Release -->
 
@@ -96,6 +93,26 @@
     <providesextension>SDL_mixer</providesextension>
     <extsrcrelease/>
     <changelog>
+        <release>
+            <date>2022-03-15</date>
+            <time>14:00:00</time>
+            <version>
+                <release>0.4.0</release>
+                <api>1.0.0</api>
+            </version>
+            <stability>
+                <release>devel</release>
+                <api>devel</api>
+            </stability>
+            <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
+            <notes>
+                - Fix SDL extension dependency (remicollet)
+                - Add workaround for Mix_HasMusicDecoder where not available (remicollet)
+                - Properly init/quit sdl_mixer library (remicollet)
+                - Improve phpinfo with Mix_Init supported flags (remicollet)
+                - Add missing 'src' build directory in config.m4 (kea)
+            </notes>
+        </release>
         <release>
             <date>2022-03-12</date>
             <time>08:00:00</time>
