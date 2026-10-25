@@ -1,7 +1,7 @@
 --TEST--
 Mix_OpenAudio, Mix_LoadMUS ogg file
 --EXTENSIONS--
-SDL_mixer
+sdl_mixer
 --FILE--
 <?php
 

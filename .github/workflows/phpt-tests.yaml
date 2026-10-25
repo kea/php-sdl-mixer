@@ -6,17 +6,44 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  # sdl 2.7.0 on PECL does not build on PHP 8.5 and emits startup warnings
+  # on PHP 8.x: build it from an upstream commit that fixes both.
+  SDL_REF: 419eb9d759e8d56b106455c5a84d25fe67526c63
+
 jobs:
   phpt-test:
-    name: "PHPT Tests"
+    name: "PHPT Tests (PHP ${{ matrix.php-versions }})"
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu, fedora]
-    runs-on: ubuntu-latest
+        os: [ubuntu-latest]
+        php-versions: ['8.2', '8.3', '8.4', '8.5']
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Build SDL_mixer extension ${{ matrix.os }}
-        run: docker build -t sdl_mixer:${{ matrix.os }} -f Dockerfile.${{ matrix.os }} .
-      - name: Run tests on ${{ matrix.os }}
-        run: docker run --rm sdl_mixer:${{ matrix.os }}
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+      - name: "Build SDL extension"
+        run: |
+          sudo apt-get update -q
+          sudo DEBIAN_FRONTEND=noninteractive apt-get -yq install libsdl2-dev libsdl2-mixer-dev
+          git clone https://github.com/Ponup/php-sdl.git "$RUNNER_TEMP/php-sdl"
+          cd "$RUNNER_TEMP/php-sdl"
+          git checkout "$SDL_REF"
+          phpize
+          ./configure
+          make
+          sudo make install
+      - name: "Build SDL_mixer extension"
+        run: |
+          phpize
+          ./configure --with-sdl_mixer
+          make
+      - name: "Run the tests"
+        env:
+          SDL_AUDIODRIVER: dummy
+        run: |
+          php run-tests.php -d extension=sdl.so -d extension=`pwd`/modules/sdl_mixer.so --offline --show-diff --set-timeout 120 -q

@@ -19,10 +19,10 @@
     </lead>
 
     <!-- Current Release -->
-    <date>2023-05-30</date>
+    <date>2026-10-25</date>
     <time>19:00:00</time>
     <version>
-        <release>1.0.0</release>
+        <release>1.0.1</release>
         <api>1.0.0</api>
     </version>
     <stability>
@@ -31,8 +31,7 @@
     </stability>
     <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
     <notes>
-        - add check for SDL2 lib in config.m4
-        - move .h main file in root folder for php-src extension compatibility
+        - add PIE support (composer.json php-ext package)
     </notes>
     <!-- End Current Release -->
 
@@ -93,6 +92,23 @@
     <providesextension>SDL_mixer</providesextension>
     <extsrcrelease/>
     <changelog>
+        <release>
+            <date>2023-05-30</date>
+            <time>19:00:00</time>
+            <version>
+                <release>1.0.0</release>
+                <api>1.0.0</api>
+            </version>
+            <stability>
+                <release>stable</release>
+                <api>stable</api>
+            </stability>
+            <license uri="https://raw.githubusercontent.com/kea/php-sdl-mixer/master/LICENSE">ZLib</license>
+            <notes>
+                - add check for SDL2 lib in config.m4
+                - move .h main file in root folder for php-src extension compatibility
+            </notes>
+        </release>
         <release>
             <date>2022-03-15</date>
             <time>14:00:00</time>

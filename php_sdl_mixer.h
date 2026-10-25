@@ -12,7 +12,7 @@ extern "C" {
 #include <php.h>
 #include <zend_exceptions.h>
 
-#define PHP_SDL_MIXER_VERSION "0.4.0"
+#define PHP_SDL_MIXER_VERSION "1.0.1"
 
 #if defined(__APPLE__) && defined(__MACH__)
 #include <SDL2/SDL.h>

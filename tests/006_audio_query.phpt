@@ -1,7 +1,7 @@
 --TEST--
 Mix_OpenAudio, Mix_ClearError, Mix_QuerySpec, Mix_GetError
 --EXTENSIONS--
-SDL_mixer
+sdl_mixer
 --FILE--
 <?php
 

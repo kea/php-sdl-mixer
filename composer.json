@@ -1,15 +1,28 @@
 {
-    "name": "SDL_mixer",
-    "version": "0.2.0",
-    "type": "extension",
-    "license": [
-        "ZLIB"
-    ],
+    "name": "kea/php-sdl-mixer",
+    "type": "php-ext",
+    "license": "Zlib",
+    "description": "Binding of SDL_mixer for PHP",
+    "keywords": ["SDL", "SDL_mixer", "audio", "multimedia", "game", "extension"],
+    "homepage": "https://github.com/kea/php-sdl-mixer",
     "authors": [
         {
             "name": "Manuel Baldassarri",
             "email": "manuel@baldassarri.me"
         }
     ],
-    "description": "Binding of SDL_mixer for PHP"
+    "require": {
+        "php": ">=8.0",
+        "ext-sdl": "*"
+    },
+    "php-ext": {
+        "extension-name": "sdl_mixer",
+        "configure-options": [
+            {
+                "name": "with-sdl_mixer",
+                "needs-value": true,
+                "description": "SDL_mixer base include and lib directory (default: search in /usr/local and /usr)"
+            }
+        ]
+    }
 }

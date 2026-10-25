@@ -1,7 +1,7 @@
 --TEST--
 Mix_OpenAudio, Mix_LoadMUS file not exists
 --EXTENSIONS--
-SDL_mixer
+sdl_mixer
 --SKIPIF--
 <?php
 if (version_compare(phpversion('sdl_mixer'), '1.0.0', '<')) {
